@@ -5,6 +5,8 @@ config-version: 2
 profile: "erp_lakehouse"
 flags:
   use_managed_iceberg: true
+  use_materialization_v2: true
+  
 model-paths: ["models"]
 analysis-paths: ["analyses"]
 test-paths: ["tests"]
