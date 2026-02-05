@@ -1,0 +1,22 @@
+version: 2
+
+sources:
+  - name: bronze
+    catalog: erp_demo
+    schema: bronze
+    tables:
+      - name: bronze_customer
+      - name: bronze_vendor
+      - name: bronze_item
+      - name: bronze_item_category
+      - name: bronze_location
+      - name: bronze_unit_of_measure
+      - name: bronze_currency
+      - name: bronze_gl_account
+      - name: bronze_gl_entry
+      - name: bronze_customer_ledger_entry
+      - name: bronze_vendor_ledger_entry
+      - name: bronze_sales_header
+      - name: bronze_sales_line
+      - name: bronze_item_ledger_entry
+      - name: bronze_value_entry
