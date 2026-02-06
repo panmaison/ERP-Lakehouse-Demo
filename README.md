@@ -1,197 +1,226 @@
-# ERP Lakehouse Data Engineering Demo
+# Enterprise ERP Lakehouse Platform
 
-This project demonstrates an **enterprise-grade Lakehouse data architecture** inspired by ERP systems such as **Navision / Business Central**.
-
-The objective is to showcase **data engineering best practices** including:
-- Layered Lakehouse design (Bronze / Silver / Gold)
-- Delta Lake tables
-- Star schema modeling
-- Basic data quality checks
-- Analytics-ready datasets
-
- **Important**  
-All data used in this project is **synthetic and artificially generated**.  
-No proprietary company systems, schemas, or data are used.
+**Databricks + dbt + GitHub | Medallion Architecture | Enterprise Data Transformation**
 
 ---
 
-## 1. Architecture Overview
+## 📌 Business Context (ERP Migration Scenario)
 
-The project follows a modern Lakehouse architecture:
+Many manufacturing and enterprise organizations are currently transitioning from:
 
-Synthetic ERP CSV Data  
-→ Landing Zone (Databricks Volume)  
-→ Bronze Layer (Raw Delta Tables)  
-→ Silver Layer (Cleaned & Conformed)  
-→ Gold Layer (Star Schema for Analytics)
+- Legacy ERP systems  
+- On-premise data warehouses (SSIS / SSAS / SQL Server)  
+- Siloed reporting environments  
 
-- **Bronze**: raw ingested data with enforced schema  
-- **Silver**: cleaned, deduplicated, and join-ready data  
-- **Gold**: analytics-ready fact and dimension tables  
+toward:
+
+- Cloud ERP (e.g., Business Central SaaS)  
+- Lakehouse-based analytics platforms  
+- Scalable AI-ready data foundations  
+
+This project simulates a real-world ERP data modernization initiative where operational data is progressively transformed into a centralized analytics platform using modern data engineering practices.
+
+The architecture reflects how companies evolve from traditional BI stacks into cloud-native data platforms.
 
 ---
 
-## 2. Dataset Scope (15 ERP-like Tables)
+## 🧭 Enterprise Scenario Description
 
-The dataset represents a realistic subset of an ERP system.
+This repository models a realistic enterprise data platform journey.
 
-### Master Data
+### Initial State (Legacy)
+
+- ERP as the primary data source  
+- Fragmented reporting  
+- Heavy ETL pipelines  
+- Limited traceability  
+- Slow analytics delivery  
+
+### Target State (Modern)
+
+- Centralized Lakehouse platform  
+- Layered data architecture  
+- Standardized transformation logic  
+- Governed business metrics  
+- AI-ready datasets  
+
+The goal is to demonstrate how data can be transformed from raw ERP extracts into reliable business-ready models.
+
+---
+
+## 🏗️ Architecture Overview (Medallion Model)
+
+ERP / CSV / API
+↓
+Landing Zone
+↓
+Bronze Layer → Raw Delta Tables (Databricks)
+↓
+Silver Layer → Cleaned & Standardized (dbt)
+↓
+Gold Layer → Business Models (dbt)
+↓
+BI / AI / Decision Support
+
+---
+
+## 📂 Platform Responsibilities
+
+### Databricks
+- Data storage (Delta Lake)  
+- Distributed compute  
+- Raw ingestion layer  
+- Bronze table persistence  
+
+### dbt
+- SQL-based transformation framework  
+- Silver/Gold modeling  
+- Data quality testing  
+- Lineage generation  
+- Documentation  
+
+### GitHub
+- Version control  
+- Change history  
+- Collaboration workflow  
+- Engineering discipline  
+
+---
+
+## 🧩 Data Governance Approach
+
+A key objective of this project is to demonstrate governance principles embedded into the data platform.
+
+### Governance Practices Included
+
+#### 1) Layered Data Ownership
+- Bronze → System ownership  
+- Silver → Data engineering ownership  
+- Gold → Business ownership  
+
+#### 2) Data Quality as Code  
+Implemented via dbt tests:
+
+- Not null validation  
+- Unique key enforcement  
+- Referential integrity checks  
+- Business rule validation  
+
+#### 3) Lineage Transparency  
+dbt generates dependency graphs showing:
+
+- Source → staging → marts  
+- Table-level transformation flow  
+- Model relationships  
+
+#### 4) Reproducibility  
+
+All transformations are:
+
+- Version-controlled  
+- Fully documented  
+- Rebuildable from scratch  
+
+---
+
+## 📊 KPI Modeling Strategy
+
+The Gold layer represents the business decision layer.  
+It focuses on structuring ERP data into analytics-ready models.
+
+### Example Modeling Concepts
+
+#### Fact Tables
+- Sales transactions  
+- Inventory movements  
+- Procurement activities  
+
+#### Dimension Tables
 - Customer  
-- Vendor  
-- Item  
-- Item Category  
-- Location  
-- Unit of Measure  
-- Currency  
+- Product  
+- Time  
+- Supplier  
 
-### Sales & Inventory
-- Sales Header  
-- Sales Line  
-- Item Ledger Entry  
-- Value Entry  
+#### KPI Examples
+- Revenue trends  
+- Inventory turnover  
+- Supplier performance  
+- Order fulfillment efficiency  
 
-### Finance / Ledger
-- G/L Account  
-- G/L Entry  
-- Customer Ledger Entry  
-- Vendor Ledger Entry  
-
-The scope is intentionally limited to focus on **design quality and scalability**, not completeness.
+These models simulate how organizations standardize business definitions across reporting tools.
 
 ---
 
-## 3. Technology Stack
+## 🔄 End-to-End Data Flow
 
-- Databricks (Free Edition)  
-- Delta Lake  
-- Apache Spark (SQL & PySpark)  
-- Unity Catalog concepts (Catalog / Schema / Volume)  
-- GitHub  
-
----
-
-## 4. Catalog & Data Organization
-
-Catalog: `erp_demo`
-
-Schemas:
-- `bronze` – raw ingested data  
-- `silver` – cleaned & conformed data  
-- `gold` – analytics-ready data  
-
-Landing data location:
-
-/Volumes/erp_demo/bronze/landing/
-
-This simulates an enterprise cloud data lake landing zone.
+- Raw ERP-like data lands in the Landing zone  
+- Databricks ingests data into Bronze Delta tables  
+- dbt transforms Bronze → Silver → Gold  
+- dbt tests ensure data reliability  
+- dbt docs generate lineage & documentation  
 
 ---
 
-## 5. Bronze Layer (Raw Ingestion)
+## 🎯 Project Objectives
 
-- CSV files loaded from landing volume  
-- Explicit schemas applied at read time  
-- Data written as Delta tables  
+This project demonstrates how to:
 
-Examples:
-- erp_demo.bronze.bronze_customer  
-- erp_demo.bronze.bronze_sales_header  
-
-Purpose:
-- Preserve raw data  
-- Ensure schema consistency  
-- Enable reproducibility  
+- Design a modern enterprise Lakehouse  
+- Apply Medallion architecture  
+- Structure transformation pipelines  
+- Embed governance into data models  
+- Build analytics-ready datasets  
+- Align technical models with business concepts  
 
 ---
 
-## 6. Silver Layer (Clean & Conform)
+## 💡 Why This Matters in Enterprise Environments
 
-Silver transformations include:
-- Type validation  
-- Deduplication  
-- Key integrity checks  
-- Standardized naming  
-- Load timestamp tracking  
+In large organizations, the biggest challenge is not technology.
 
-Examples:
-- erp_demo.silver.customer  
-- erp_demo.silver.sales_header  
-- erp_demo.silver.sales_line  
+It is:
 
-Silver tables are join-ready and suitable for business logic.
+- Data consistency  
+- Shared definitions  
+- Traceability  
+- Governance  
+- Scalability  
+
+This project reflects how modern platforms address these challenges using structured transformation frameworks and version-controlled workflows.
 
 ---
 
-## 7. Gold Layer (Star Schema)
+## 🚀 Future Enhancements
 
-### Dimension Tables
-- dim_customer  
-- dim_item  
-- dim_location  
-- dim_date  
+Planned enterprise-level extensions:
 
-### Fact Tables
-- fact_sales (order-line grain)  
-- fact_inventory_movement  
-- fact_gl  
-
-These tables follow a **star schema design**, optimized for BI and SQL analytics.
+- CI/CD deployment pipelines  
+- Data freshness monitoring  
+- Semantic layer integration  
+- Feature engineering for ML  
+- API ingestion pipelines  
+- Master Data modeling  
 
 ---
 
-## 8. Date Dimension
+## 👤 Author
 
-A conformed `dim_date` is automatically generated based on the date ranges found in fact tables.
+Data & BI Manager with experience in:
 
-Attributes include:
-- Year  
-- Quarter  
-- Month  
-- Week of year  
-- Day of week  
-- Weekend flag  
+- ERP-driven analytics platforms  
+- Enterprise data warehouse modernization  
+- Lakehouse architecture design  
+- Business-centric data modeling  
+- AI-ready data platform strategy  
 
 ---
 
-## 9. Data Quality Checks
+## ⭐ Key Takeaway
 
-Basic data quality checks are implemented:
-- Not-null validation on key fields  
-- Referential integrity between facts and dimensions  
+This repository demonstrates how modern organizations transition from legacy BI environments to scalable Lakehouse platforms by combining:
 
-In production, these checks would be automated and monitored.
+- Databricks for storage & compute  
+- dbt for transformation & governance  
+- GitHub for engineering workflow  
 
----
-
-## 10. How to Run
-
-1. Upload CSV files to:
-
-/Volumes/erp_demo/bronze/landing/
-
-2. Run notebooks in order:
-- 01_load_bronze  
-- 02_build_silver  
-- 03_build_gold  
-
-3. Validate Gold tables using SQL or Databricks UI.
-
----
-
-## 11. Intended Audience
-
-This project is designed for:
-- Data Engineers  
-- Analytics Engineers  
-- BI / Analytics Architects  
-- Technical Managers  
-
-The focus is on **engineering design and data modeling**, not tool-specific shortcuts.
-
----
-
-## 12. Disclaimer
-
-This project is for educational and demonstration purposes only.  
-All data is synthetic. Any resemblance to real systems is purely structural.
-
+Together, they form the foundation of a production-grade enterprise analytics platform.
