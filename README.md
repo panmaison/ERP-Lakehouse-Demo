@@ -62,8 +62,7 @@ Silver Layer   → Cleaned & Standardized (dbt)
 Gold Layer     → Business Models (dbt)
   ↓
 BI / AI / Decision Support
-
-
+```
 ---
 
 ## 📂 Platform Responsibilities
