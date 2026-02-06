@@ -50,12 +50,19 @@ The goal is to demonstrate how data can be transformed from raw ERP extracts int
 
 ## 🏗️ Architecture Overview (Medallion Model)
 
-ERP / CSV / API <br>
-↓ Landing Zone <br>
-↓ Bronze Layer → Raw Delta Tables (Databricks) <br>
-↓ Silver Layer → Cleaned & Standardized (dbt) <br>
-↓ Gold Layer → Business Models (dbt) <br>
-↓ BI / AI / Decision Support
+```text
+ERP / CSV / API
+  ↓
+Landing Zone
+  ↓
+Bronze Layer   → Raw Delta Tables (Databricks)
+  ↓
+Silver Layer   → Cleaned & Standardized (dbt)
+  ↓
+Gold Layer     → Business Models (dbt)
+  ↓
+BI / AI / Decision Support
+
 
 ---
 
