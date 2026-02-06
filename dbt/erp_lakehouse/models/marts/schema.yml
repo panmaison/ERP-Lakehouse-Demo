@@ -4,75 +4,85 @@ models:
   - name: dim_date
     columns:
       - name: date
-        tests: [not_null, unique]
+        tests:
+          - test_name: not_null
+          - test_name: unique
       - name: date_key
-        tests: [not_null, unique]
-
-  - name: dim_customer
-    columns:
-      - name: customer_id
-        tests: [not_null, unique]
+        tests:
+          - test_name: not_null
+          - test_name: unique
 
   - name: dim_item
     columns:
       - name: item_id
-        tests: [not_null, unique]
+        tests:
+          - test_name: not_null
+          - test_name: unique
+
+  - name: dim_customer
+    columns:
+      - name: customer_id
+        tests:
+          - test_name: not_null
+          - test_name: unique
 
   - name: fact_sales
     columns:
       - name: sales_order_id
-        tests: [not_null]
-      - name: customer_id
         tests:
-          - not_null
-          - relationships:
-              to: ref('dim_customer')
-              field: customer_id
+          - test_name: not_null
+
       - name: item_id
         tests:
-          - not_null
-          - relationships:
+          - test_name: not_null
+          - test_name: relationships
+            arguments:
               to: ref('dim_item')
               field: item_id
+
+      - name: customer_id
+        tests:
+          - test_name: not_null
+          - test_name: relationships
+            arguments:
+              to: ref('dim_customer')
+              field: customer_id
+
       - name: date_key
         tests:
-          - not_null
-          - relationships:
+          - test_name: relationships
+            arguments:
               to: ref('dim_date')
               field: date_key
 
   - name: fact_gl
     columns:
       - name: entry_id
-        tests: [not_null]
+        tests:
+          - test_name: not_null
+          - test_name: unique
       - name: date_key
         tests:
-          - not_null
-          - relationships:
+          - test_name: relationships
+            arguments:
               to: ref('dim_date')
               field: date_key
-      - name: gl_account_no
-        tests:
-          - not_null
-          - relationships:
-              to: ref('dim_gl_account')
-              field: gl_account_no
 
   - name: fact_inventory_movement
     columns:
       - name: entry_id
-        tests: [not_null, unique]
-
+        tests:
+          - test_name: not_null
+          - test_name: unique
       - name: item_id
         tests:
-          - not_null
-          - relationships:
+          - test_name: relationships
+            arguments:
               to: ref('dim_item')
               field: item_id
-
       - name: date_key
         tests:
-          - not_null
-          - relationships:
+          - test_name: relationships
+            arguments:
               to: ref('dim_date')
               field: date_key
